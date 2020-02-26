@@ -54,6 +54,15 @@ function logMsg(msg) {
     console.log(output);
 }
 
+function buildDir(what) {
+    let dir = what;
+    if (!fs.existsSync(dir)){
+        fs.mkdirSync(dir);
+        logMsg('genrC056 - Created directory: ' +  dir);
+    } else {
+        logMsg('genrC057 - Located directory: ' +  dir);
+    }
+}
 
 function listTemplateFiles() {
     let files = readTemplateDirectory();
@@ -280,7 +289,7 @@ function buildConfig() {
             if (typeof config.masterIP === 'undefined') {
                 logMsg('genrG121 - Parameter masterIP is not defined');
                 stop = true;
-            } else {
+            } else { 
                 masterIP  = config.masterIP;
                 logMsg('genrG222 - Parameter masterIP                  : ' + masterIP);
             }
@@ -324,6 +333,9 @@ function buildConfig() {
                 logMsg('genrG115 - All required config parameters processed');
                 logMsg('genrG110 - ---------------------------------------------------------');
             }
+
+            // Build the output directory if it does not exist
+            buildDir(outputDir);
 
         } catch(err) {
             logMsg('genrG100 - Unable to process config file: ' + templateConfig + ' message: ' + err);

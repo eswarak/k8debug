@@ -17,7 +17,7 @@ package-lock.json
 collector/node_modules
 collector/.vscode/*
 
-deployment/configTemplate.json
+# deployment/configTemplate.json
 deployment/node_modules
 deployment/teams.json
 deployment/fileout/*
