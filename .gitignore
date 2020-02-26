@@ -1,0 +1,31 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+.vscode/*
+
+.DS_Store
+
+package-lock.json
+
+collector/node_modules
+collector/.vscode/*
+
+deployment/configTemplate.json
+deployment/node_modules
+deployment/teams.json
+deployment/fileout/*
+
+terraformFiles/.terraform/
+terraformFiles/sshkey
+terraformFiles/sshkey.priv
+terraformFiles/sshkey.pub
+terraformFiles/terraform.tfstate
+terraformFiles/terraform.tfstate.backup
+
