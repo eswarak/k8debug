@@ -1,0 +1,85 @@
+--- #
+--- # Course :: Problem Diagnosis and Troubleshooting Lab 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{team}}-igloo
+  namespace: {{team}}
+  labels:
+    app: {{team}}-igloo
+spec:
+  selector:
+    matchLabels:
+      app: {{team}}-igloo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{team}}-igloo
+    spec:
+      containers:
+      - name: {{team}}-igloo
+        image: {{repoName}}/igloo:{{version}}
+        imagePullPolicy: Always
+        env:
+          - name: APP_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: APP_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: COLLECTOR_CONFIG
+            valueFrom: 
+              configMapKeyRef:
+                name: {{team}}-collector-config
+                key: COLLECTOR_CONFIG
+          - name: INSTRUCTOR_CONFIG
+            valueFrom: 
+              configMapKeyRef:
+                name: {{team}}-collector-config
+                key: INSTRUCTOR_CONFIG
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+            
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 4100
+          initialDelaySeconds: 15 
+          timeoutSeconds: 1
+          periodSeconds: 5
+          successThreshold: 1
+          failureThreshold: 3
+
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 4100
+          initialDelaySeconds: 20
+          timeoutSeconds: 1
+          periodSeconds: 15 
+          failureThreshold: 1
+---
+--- # Service defs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{team}}-igloo
+  namespace: {{team}}
+  labels:
+    app: {{team}}-igloo
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 4100
+      protocol: TCP
+      name: {{team}}-igloo
+  selector:
+    app: {{team}}-igloo

@@ -1,0 +1,1 @@
+ssh -o StrictHostKeyChecking=no  -o UserKnownHostsFile=/dev/null -i ./sshkey root@$1 'chmod 777 -R /var/nfsshare/{{team}}'

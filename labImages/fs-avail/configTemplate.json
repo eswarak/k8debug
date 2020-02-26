@@ -1,0 +1,18 @@
+{
+    "instructorUrl"       : "http://dashboard.default",
+    "instructorNamespace" : "default",
+    "repoName"            : "docker.io/ibmicpcoc",
+    "containerName"       : "collector",
+    "version"             : "latest",
+    "studentPort"         : 31001,
+    "instructorPort"      : 31000,
+    "teamsFile"           : "/Users/daveweilert/ocpCollector/buildDeploy/teams20_Numbers.json",
+    "outputDir"           : "/Users/daveweilert/ocpCollector/buildDeploy/yamlout",
+    "templateDir"         : "/Users/daveweilert/ocpCollector/buildDeploy/templates",
+    "studentIP"           : "159.23.66.102, 159.23.66.98, 159.23.66.100",
+    "masterIP"            : "159.23.66.107",
+    "adminUser"           : "admin",
+    "adminPswd"           : "admin",
+    "nfs"                 : "159.23.66.102",
+    "routeHost"           : "pysyd.159.23.66.107.nip.io"
+}

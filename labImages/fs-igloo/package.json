@@ -1,0 +1,22 @@
+{
+  "name": "iglo",
+  "version": "1.0.0",
+  "description": "Class application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Dave Weilert",
+  "license": "MIT",
+  "dependencies": {
+    "command-line-args": "^5.0.2",
+    "compression": "^1.7",
+    "express": "^4.16.2",
+    "request": "^2.88.0",
+    "uuid": "^3.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ibmicpcoc/igloo"
+  }
+}

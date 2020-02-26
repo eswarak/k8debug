@@ -1,0 +1,32 @@
+{  
+   "teams":{  
+      "team01":{  
+         "color":"#FF0000",
+         "text":"black"
+      },
+      "team02":{  
+         "color":"#D2B48C",
+         "text":"black"
+      },
+      "team03":{  
+         "color":"#00FFFF",
+         "text":"white"
+      },
+      "team04":{  
+         "color":"#0000FF",
+         "text":"white"
+      },
+      "team05":{  
+         "color":"#FFD700",
+         "text":"black"
+      },
+      "team06":{  
+         "color":"#D3D3D3",
+         "text":"white"
+      },
+      "team07":{  
+         "color":"#00FF00",
+         "text":"white"
+      }
+   }
+}

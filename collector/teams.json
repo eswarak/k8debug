@@ -1,0 +1,12 @@
+{  
+   "teams":{  
+      "team01":{  
+         "color":"#FF0000",
+         "text":"black"
+      },
+      "team02":{  
+         "color":"#D2B48C",
+         "text":"black"
+      }
+   }
+}

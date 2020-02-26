@@ -1,0 +1,27 @@
+{
+  "name": "collector",
+  "version": "1.0.0",
+  "description": "Simple program used for K8 training",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Dave Weilert",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "chalk": "^2.3.2",
+    "command-line-args": "^5.0.2",
+    "command-line-usage": "^4.1.0",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "fs-extra": "^5.0.0",
+    "request": "^2.88.0",
+    "socket.io": "^2.0.4",
+    "uuid": "^3.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}

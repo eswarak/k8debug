@@ -1,0 +1,92 @@
+--- #
+--- # Course :: Problem Diagnosis and Troubleshooting Lab 
+--- # Persistent Volume
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{team}}-pv 
+  labels:
+    user: {{team}}
+spec:
+  capacity:
+    storage: 1Mi 
+  accessModes:
+  - ReadWriteOnce 
+  nfs: 
+    path: /var/nfsshare/{{team}}/pvc001
+    server: {{nfs}}
+  persistentVolumeReclaimPolicy: Recycle    
+--- #
+--- # Persistent Volume Claim
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{team}}-offer
+  namespace: {{team}}
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Mi
+  selector:
+    matchLabels:
+      user: {{team}}
+--- #
+--- # Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{team}}-offer
+  namespace: {{team}}
+  labels:
+    app: {{team}}-offer
+spec:
+  selector:
+    matchLabels:
+      app: {{team}}-offer
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{team}}-offer
+    spec:
+      containers:
+      - name: {{team}}-offer
+        image: {{repoName}}/offer:{{version}}
+        imagePullPolicy: Always
+        command: ["node", "app.js"]
+        volumeMounts:
+        - name: offer-data
+          mountPath: /data
+        env:
+          - name: APP_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: APP_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: COLLECTOR_CONFIG
+            valueFrom: 
+              configMapKeyRef:
+                name: {{team}}-collector-config
+                key: COLLECTOR_CONFIG
+          - name: INSTRUCTOR_CONFIG
+            valueFrom: 
+              configMapKeyRef:
+                name: {{team}}-collector-config
+                key: INSTRUCTOR_CONFIG
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+      volumes:
+      - name: offer-data
+        persistentVolumeClaim:
+          claimName: {{team}}-offr
+---

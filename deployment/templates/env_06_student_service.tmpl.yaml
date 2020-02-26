@@ -1,0 +1,21 @@
+--- #
+--- # Create Servie for each team/student
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{team}}-student-ui
+  namespace: {{team}}
+  labels:
+    app: {{team}}-student-ui
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      nodePort: {{studentPort}}
+      targetPort: 3000
+      protocol: TCP
+      name: {{team}}-student-ui
+  selector:
+    app: {{team}}-student-ui
+---

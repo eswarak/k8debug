@@ -1,0 +1,11 @@
+[rasp]
+192.168.1.100 ansible_ssh_user=pi ansible_ssh_pass=PassW2rd
+
+[okd]
+52.117.241.202  ansible_ssh_user=okdadmin ansible_ssh_pass=okd@2019
+52.117.241.205  ansible_ssh_user=okdadmin ansible_ssh_pass=okd@2019
+52.117.241.197  ansible_ssh_user=okdadmin ansible_ssh_pass=okd@2019
+169.62.172.201  ansible_ssh_user=okdadmin ansible_ssh_pass=okd@2019
+169.62.172.196  ansible_ssh_user=okdadmin ansible_ssh_pass=okd@2019
+169.62.172.205  ansible_ssh_user=okdadmin ansible_ssh_pass=okd@2019
+52.117.241.21   ansible_ssh_user=okdadmin ansible_ssh_pass=okd@2019

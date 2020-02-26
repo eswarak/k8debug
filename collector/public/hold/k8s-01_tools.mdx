@@ -1,0 +1,352 @@
+
+:course_title: K8s-01 - Access tools
+:course_id: dave
+:course_desc: This course provides the student with the necessary steps to access the required CLIs (command line interface) tools needed to complete the additional courses. <br><br>Access to the tools is via a SSH session to a remote server.
+
+:course_max: 4
+
+:button1_label: Task
+:button1_color: #f00
+:button1_size: 950
+
+:button2_label: Hint
+:button2_delay: 0
+:button2_color: #e6ffe6
+:button2_size: 100
+
+:button3_label: Complete
+:button3_delay: 0
+:button3_color: #ffe6b3
+:button3_size: 200
+
+:infotab: <hr>
+
+:infotab: <br><br>Example debug flow:<img class="mx-auto d-block" src="../courseimages/debug-flow.png" height="450" width="1000">
+
+:infotab: <br>cmd - command to run
+
+:infotab: <br>container -container name (required if more than one container)
+
+:infotab: <br>object - pods, service, statefulsets, deployment, etc.
+
+:infotab: <br>pod - pod name
+
+:infotab: <br>unit - unit running, e.g. kubelet, docker, etc.
+
+
+
+----
+----
+
+:section_1: Task SSH session
+
+<br>
+
+The objective of this task is to have the student start a SSH session.  The SSH session will connect to a server that will be used for tasks in this course and all other courses.  The target server has the tools installed that are needed for these courses.
+
+
+Press the link for the desired operating system and follow the instructions. 
+
+
+[macOs](#macOS_ssh)
+
+[Linux](#Linux_ssh)
+
+[Windows](#windows_ssh)
+
+
+__Useful information the instructor will provide:__
+
+- IP address - this is the IP address of the server that will be used.
+- TEAM - the team name will be used.
+
+<br>
+
+----
+
+<a name="macOS_ssh"></a>
+
+<img align="left" width="30" height="39" src="../courseimages/mac_logo.png">&nbsp;
+### macOS ssh
+
+<br>
+
+1 - Open terminal session on local machine
+
+Using an already installed terminal software start the program.  This should result in a new terminal session on your machine.
+
+<br>
+
+2 - Enter the ssh command:
+
+```
+
+Command:
+
+	ssh <team>@<IP address>
+
+Example output:
+
+	Macbook$ ssh team01@52.117.155.21
+	
+	team01@52.117.155.21's password:     <<<--- enter team password
+	
+	Last login: Thu Sep 19 17:48:39 2019 from cpe-74-213-21-226.austin.res.rr.com
+
+	[team01@server ~]$
+	
+
+```
+
+----
+
+<a name="Linux_ssh"></a>
+
+<img align="left" width="30" height="39" src="../courseimages/linux.png">&nbsp;
+### Linux ssh
+
+<br>
+
+1 - Open terminal session on local machine
+
+Using an already installed terminal software start the program.  This should result in a new terminal session on your machine.
+
+<br>
+
+2 - Enter the ssh command:
+
+```
+
+Command:
+
+	ssh <team>@<IP address>
+
+Example output:
+
+	Macbook$ ssh team01@52.117.155.21
+	
+	team01@52.117.155.21's password:     <<<--- enter team password
+	
+	Last login: Thu Sep 19 17:48:39 2019 from cpe-74-213-21-226.austin.res.rr.com
+
+	[team01@server ~]$
+	
+
+```
+
+----
+
+<a name="Windows_ssh"></a>
+
+<img align="left" width="39" height="30" src="../courseimages/windows10_blank.png">&nbsp;
+### Windows ssh
+
+
+__NOTICE__ These instructions assume that Windows 10 is being used.
+ 
+<br>
+
+1 - Open Power Shell 
+
+Open Power Shell
+
+
+<br>
+
+2 - Enter the ssh command:
+
+```
+
+Command:
+
+	ssh <team>@<IP address>
+
+Example output:
+
+	PS C:\Users\dave ssh team01@52.117.155.21
+	
+	team01@52.117.155.21's password:     <<<--- enter team password
+	
+	Last login: Thu Sep 19 17:48:39 2019 from cpe-74-213-21-226.austin.res.rr.com
+
+	[team01@server ~]$
+	
+
+```
+
+----
+
+:section_2: Hint SSH session
+
+<br>
+
+If needed there will be a hint provided to assist in completing this task.
+
+----
+
+:section_3: Complete SSH session
+
+<br>
+
+> ConfirmButton SSH session
+
+
+
+----
+----
+
+:section_1: Task OC Download 
+
+<br>
+
+This task is optional and only used if not accessing the oc client tool via the SSH session. 
+
+<br>
+Select the following url link labeled __oc Client tool__ to navigate to an OKD website.  Then select the target operating system where the oc client tool will be installed and download the tool. 
+
+<rb><br>
+
+[oc Client tool](https://www.okd.io/download.html)
+
+<br>
+
+If you use Mac OS or Linux, complete the following steps to add the binaries to your PATH system variable. If you use Windows, install the oc CLI in a directory that is in your PATH.
+
+a. Move the oc executable files to the /usr/local/bin directory.
+
+
+```
+mv /<filepath>/oc /usr/local/bin/oc
+```
+
+b. Make sure that /usr/local/bin is listed in your PATH system variable. The PATH variable contains all directories where your operating system can find executable files. The directories that are listed in the PATH variable serve different purposes. /usr/local/bin is used to store executable files for software that is not part of the operating system and that was manually installed by the system administrator.
+
+To check the current path use:
+
+```
+echo $PATH
+```
+
+
+----
+
+:section_2: Hint OC Download
+
+<br>
+
+If needed there will be a hint provided to assist in completing this task.
+
+
+----
+
+:section_3: Complete OC Download
+
+<br>
+
+> ConfirmButton OC Download
+
+
+
+----
+----
+
+:section_1: Task oc version 
+
+<br>
+
+The objective of this task is to have the student use the __oc__ CLI and determine the version that is installed.  
+
+```
+
+Command:
+
+	oc version
+
+Example output:
+
+	oc v3.11.0+0cbc58b
+	kubernetes v1.11.0+d4cacc0
+	features: Basic-Auth GSSAPI Kerberos SPNEGO
+
+
+```
+
+Press the Complete button to view the final instructions for this task.
+
+----
+
+:section_2: Hint oc version
+
+<br>
+
+If needed there will be a hint provided to assist in completing this task.
+
+----
+
+:section_3: Complete oc version
+
+<br>
+
+> ConfirmButton oc version
+
+
+
+----
+----
+
+:section_1: Task docker version
+
+<br>
+
+The objective of this task is to have the student use the __docker__ command and determine the version that is installed.  
+
+```
+
+Command:
+
+	docker version
+
+Example output:
+
+	Client:
+	 Version:         1.13.1
+	 API version:     1.26
+	 Package version: docker-1.13.1-103.git7f2769b.el7.centos.x86_64
+	 Go version:      go1.10.3
+	 Git commit:      7f2769b/1.13.1
+	 Built:           Sun Sep 15 14:06:47 2019
+	 OS/Arch:         linux/amd64
+	
+	Server:
+	 Version:         1.13.1
+	 API version:     1.26 (minimum version 1.12)
+	 Package version: docker-1.13.1-103.git7f2769b.el7.centos.x86_64
+	 Go version:      go1.10.3
+	 Git commit:      7f2769b/1.13.1
+	 Built:           Sun Sep 15 14:06:47 2019
+	 OS/Arch:         linux/amd64
+	 Experimental:    false	
+	
+
+```
+
+
+----
+
+:section_2: Hint docker version
+
+<br>
+
+If needed there will be a hint provided to assist in completing this task.
+
+----
+
+:section_3: Complete docker version
+
+<br>
+
+> ConfirmButton docker version
+
+
+----
+----

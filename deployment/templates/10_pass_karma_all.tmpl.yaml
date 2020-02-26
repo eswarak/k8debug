@@ -1,0 +1,7 @@
+--- #
+--- # Course :: Problem Diagnosis and Troubleshooting Lab 
+--- #
+--- # Run the following command in each team project to enable root priv
+--- #
+--- # oc adm policy add-scc-to-user anyuid system:serviceaccount:{{team}}:default
+--- #

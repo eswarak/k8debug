@@ -1,0 +1,20 @@
+{
+  "name": "fsclient",
+  "version": "0.0.1",
+  "description": "Simple program that sends data to collector.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Dave Weilert",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "request": "^2.88.0",
+    "uuid": "^3.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ibmicpcoc/fsclient"
+  }
+}

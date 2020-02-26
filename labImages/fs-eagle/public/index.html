@@ -1,0 +1,92 @@
+<doctype html>
+<html lang="en">
+
+<head>
+    <title>WebMe</title>
+
+    <!-- Copyright 2018 Dave Weilert
+
+		Permission is hereby granted, free of charge, to any person obtaining a copy of this software 
+		and associated documentation files (the "Software"), to deal in the Software without restriction, 
+		including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+		and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, 
+		subject to the following conditions:
+
+		The above copyright notice and this permission notice shall be included in all copies or substantial 
+		portions of the Software.
+
+		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT 
+		LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. 
+		IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, 
+		WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE 
+		SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+		-->
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Images -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    <!-- Scripts -->
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+</head>
+
+<body>
+    <div id="main">
+        <!-- ==================================== -->
+        <!-- Header section                       -->
+        <!-- ==================================== -->
+        <div class="container">
+            <div class="container" id="titlebar" style="margin-top: 10px;">
+                <h4>
+                    <span style="margin-left: 20px; font-family: Arial Rounded MT Bold, Helvetica Rounded, Arial, sans-serif;">
+                    	WebMe
+                    </span>
+                </h4>
+            </div>
+        </div>
+
+        <!-- ==================================== -->
+        <!-- Splash section                       -->
+        <!-- ==================================== -->
+        <div class="container">
+            <hr>
+            <div class="container" id="splash">
+                <div class="text-center">
+                    <h5 style="padding-top: 30px; font-family: Arial Rounded MT Bold, Helvetica Rounded, Arial, sans-serif;">A sample application that communicates with collector.</h5>
+
+                    <div class="text-center" style="padding-bottom: 30px; padding-top: 30px;">
+                        <img class="mx-auto d-block" src="images/webme.png" alt="drsearch" height="190" width="312">
+                    </div>
+
+                    <button id="searchBtn" class="btn btn-outline-primary btn-lg" onclick="confirm()">
+                        Click to complete lab!
+                    </button>
+                </div>
+                <div class="text-center">
+                    <div style="padding-top: 30px; font-family: Arial Rounded MT Bold, Helvetica Rounded, Arial, sans-serif;">
+                        <h5 id="confirmed">Lab Not Completed!</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================================== -->
+    <!-- Scripts section                      -->
+    <!-- ==================================== -->
+    <!-- Socket.io Script -->
+    <script src="/socket.io/socket.io.js"></script>
+    <!-- Script -->
+    <script src="js/webmain.js"></script>
+
+</body>
+
+</html>

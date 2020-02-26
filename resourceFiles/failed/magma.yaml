@@ -1,0 +1,61 @@
+--- #
+--- # Course :: Problem Diagnosis and Troubleshooting Lab 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <team>-magma
+  namespace: <team>
+  labels:
+    app: <team>-magma
+spec:
+  selector:
+    matchLabels:
+      app: <team>-magma
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: <team>-magma
+    spec:
+      containers:
+      - name: <team>-magma
+        image: docker.io/ibmicpcoc/magma:latest
+        imagePullPolicy: Always
+        command: ["node", "app.js"]
+        volumeMounts:
+        - name: configvol
+          mountPath: /var/config
+        - name: secretvol
+          mountPath: /var/secret
+        env:
+          - name: APP_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: APP_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: COLLECTOR_CONFIG
+            valueFrom: 
+              configMapKeyRef:
+                name: <team>-collector-config
+                key: COLLECTOR_CONFIG
+          - name: INSTRUCTOR_CONFIG
+            valueFrom: 
+              configMapKeyRef:
+                name: <team>-collector-config
+                key: INSTRUCTOR_CONFIG
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+      volumes:
+        - name: configvol
+          configMap:
+            name: <team>-configmap-file
+        - name: secretvol
+          secret:
+            secretName: <team>-secret-file
+---

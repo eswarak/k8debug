@@ -1,0 +1,72 @@
+--- #
+--- # Course :: Problem Diagnosis and Troubleshooting Lab 
+--- # Service 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{team}}-quake
+  namespace: {{team}}
+  labels:
+    app: {{team}}-quake
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 4400
+      protocol: TCP
+      name: {{team}}-quake
+  selector:
+    app: {{team}}-quake
+--- #
+--- # Deployment
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{team}}-quake
+  namespace: {{team}}
+  labels:
+    app: {{team}}-quake
+spec:
+  selector:
+    matchLabels:
+      app: {{team}}-quake
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{team}}-quake
+    spec:
+      containers:
+      - name: {{team}}-quake
+        image: {{repoName}}/quake:{{version}}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4100
+        env:
+          - name: APP_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: APP_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: COLLECTOR_CONFIG
+            valueFrom: 
+              configMapKeyRef:
+                name: {{team}}-collector-config
+                key: COLLECTOR_CONFIG
+          - name: INSTRUCTOR_CONFIG
+            valueFrom: 
+              configMapKeyRef:
+                name: {{team}}-collector-config
+                key: INSTRUCTOR_CONFIG
+          - name: ROUTE
+            value: "hotdog-{{team}}.{{routeHost}}.nip.io"
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+---

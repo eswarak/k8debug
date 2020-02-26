@@ -1,0 +1,8 @@
+{  
+   "teams":{  
+      "<team>":{  
+         "color":"#FF0000",
+         "text":"black"
+      }
+   }
+}

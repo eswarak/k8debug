@@ -1,0 +1,1 @@
+oc adm policy remove-scc-from-user anyuid system:serviceaccount:{{team}}:default

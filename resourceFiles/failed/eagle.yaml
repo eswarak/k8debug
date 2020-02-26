@@ -1,0 +1,68 @@
+--- #
+--- # Course :: Problem Diagnosis and Troubleshooting Lab 
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <team>-eagle
+  namespace: <team>
+  labels:
+    app: <team>-eagle
+spec:
+  selector:
+    matchLabels:
+      app: <team>-eagle
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: <team>-eagle
+    spec:
+      containers:
+      - name: <team>-eagle
+        image: docker.io/ibmicpcoc/eagle:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4100
+        env:
+          - name: APP_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: APP_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: COLLECTOR_CONFIG
+            valueFrom: 
+              configMapKeyRef:
+                name: <team>-collector-config
+                key: COLLECTOR_CONFIG
+          - name: INSTRUCTOR_CONFIG
+            valueFrom: 
+              configMapKeyRef:
+                name: <team>-collector-config
+                key: INSTRUCTOR_CONFIG
+        resources:
+          requests:
+            cpu: 50m
+            memory: 50Mi
+---
+--- # Service defs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: <team>-eagle
+  namespace: <team>
+  labels:
+    app: <team>-eagle
+spec:
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 4010
+      protocol: TCP
+      name: <team>-eagle
+  selector:
+    app: <team>-eagle

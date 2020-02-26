@@ -1,0 +1,45 @@
+--- # 
+--- # Create Deployment for each team/student  
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{team}}-student-ui
+  namespace: {{team}}
+  labels:
+    app: {{team}}-student-ui
+spec:
+  selector:
+    matchLabels:
+      app: {{team}}-student-ui
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: {{team}}-student-ui
+    spec:
+      containers:
+      - name: {{team}}-student-ui
+        image: {{repoName}}/collector:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+          - name: APP_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          - name: APP_NAME
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.name
+          - name: COLLECTOR_CONFIG
+            valueFrom: 
+              configMapKeyRef:
+                name: {{team}}-collector-config
+                key: COLLECTOR_CONFIG
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+---

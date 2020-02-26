@@ -1,0 +1,8 @@
+{
+    "enablePrint"    : true,
+    "instructorCloud": "http://dashboard.default",
+    "instructorLocal": "http://127.0.0.1:4200",
+    "language"       : "english",
+    "softwareVersion": "3.0.0"
+}
+

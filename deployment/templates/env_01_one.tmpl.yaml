@@ -1,0 +1,10 @@
+---  
+--- # Create Instructor config map with url
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: instructor-ui-config
+  namespace: {{instructorNamespace}}
+data:
+  COLLECTOR_CONFIG: '{{instructorUrl}}'

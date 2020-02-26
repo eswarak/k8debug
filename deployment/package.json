@@ -1,0 +1,19 @@
+{
+  "name": "collector",
+  "version": "1.0.0",
+  "description": "Generate deployment files for Collector",
+  "main": "generate.js",
+  "scripts": {
+    "start": "node generate.js"
+  },
+  "author": "Dave Weilert",
+  "license": "MIT",
+  "dependencies": {
+    "fs": "0.0.1-security",
+    "fs-extra": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "vpk",
+  "version": "0.0.1",
+  "description": "Simple program used for K8 training",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Dave Weilert",
+  "license": "MIT",
+  "dependencies": {
+    "request": "^2.88.0",
+    "uuid": "^3.3.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  }
+}
