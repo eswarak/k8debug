@@ -1,0 +1,18 @@
+{
+    "adminUser"           : "admin",
+    "adminPswd"           : "admin",
+    "containerName"       : "collector",
+    "instructorNamespace" : "default",
+    "instructorPort"      : 31000,
+    "instructorUrl"       : "http://dashboard.default",
+    "outputDir"           : "fileout",
+    "repoName"            : "docker.io/ibmicpcoc",
+    "studentPort"         : 31001,
+    "teamsFile"           : "teams.json",
+    "templateDir"         : "templates",
+    "version"             : "latest",
+    "masterIP"            : "52.117.241.202",
+    "nfs"                 : "169.62.172.197",
+    "routeHost"           : "cp4i.52.117.241.202.nip.io",
+    "studentIP"           : "169.62.172.197"
+}
