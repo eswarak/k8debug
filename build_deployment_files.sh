@@ -11,9 +11,12 @@ CW=$(pwd)
 # Copy teams.json 
 if [ -f ./teams.json ]; then
     echo " "
-    echo "  Copy teams.json to build directory: $CWD/deployment"
+    echo "  Copy teams.json to build directory: $CW/deployment"
     echo " "
     cp ./teams.json $(pwd)/deployment/teams.json
+    echo "  Copy teams.json to collector directory: $CW/collector"
+    echo " "
+    cp ./teams.json $(pwd)/collector/teams.json
 else
     echo " "
     echo "  ERROR: Required file, teams.json is not located in the current directory"
