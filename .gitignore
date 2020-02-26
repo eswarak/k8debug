@@ -16,6 +16,7 @@ package-lock.json
 
 collector/node_modules
 collector/.vscode/*
+collector/public/coursecatalog/*.pdf
 
 # deployment/configTemplate.json
 deployment/node_modules
