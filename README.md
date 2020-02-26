@@ -1,2 +1,2 @@
-# k8debug
-Learn debugging skills for Kubernetes focusing on OpenShift deployment
+# K8 Debugging
+All assets needed to build K8 environment, Collector application, and Problem Determination and Debugging course

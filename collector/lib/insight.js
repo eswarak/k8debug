@@ -23,7 +23,8 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 const cllr = require('./cllr');
 const utl = require('./utl');
-const exdata = require('../insight/example_data');
+//const exdata = require('../insight/example_data');
+
 
 let lbl = {};
 let rptData = {};
