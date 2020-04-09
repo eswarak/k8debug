@@ -48,6 +48,8 @@ var b2Chk = '';
 var b3Chk = '';
 var filler = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 var authFail;
+var editor;
+var currentEditFile; 
 
 //----------------------------------------------------------
 // document ready
@@ -170,6 +172,26 @@ $(document).ready(function() {
             }
         };
     })
+
+
+    editor = ace.edit("editor");
+
+	// switch edit theme
+	$("#eTheme").change(function(){
+		var selected = $('#eTheme option:selected').val();
+        editor.setTheme("ace/theme/" + selected );
+	});
+
+    //  
+	// switch font size in editor
+	$("#eFont").change(function(){
+		var selected = $('#eFont option:selected').val();
+        var size = parseInt(selected, 10);
+        editor.setFontSize(size)
+	});
+
+
+
 });
 
 // dynamically add the canvas element definitions for each course on the insight tab
@@ -219,6 +241,7 @@ function setLabels() {
 	$("#menu09").html(uiLabels.menu09);
 	$("#menu10").html(uiLabels.menu10);
 	$("#menu11").html(uiLabels.menu11);
+	$("#menu12").html(uiLabels.menu12);
 
 	// tab labels
 	$("#tab00").html(uiLabels.tab00);
@@ -292,6 +315,11 @@ function setLabels() {
 	$("#modal_print_preview").html(uiLabels.modal_print_preview);
 	$("#modal_print_fail").html(uiLabels.modal_print_fail);
 
+	$("#modal_efile_hdr1").html(uiLabels.modal_efile_hdr1);
+	$("#modal_efile_lbl").html(uiLabels.modal_efile_lbl);
+	$("#modal_efile_btn1").html(uiLabels.modal_efile_btn1);
+	$("#modal_efile_btn2").html(uiLabels.modal_efile_btn2);
+
 	$("#modal_delete_hdr1").html(uiLabels.modal_delete_hdr1);
 	$("#modal_delete_btn1").html(uiLabels.modal_delete_btn1);
 	$("#modal_delete_btn2").html(uiLabels.modal_delete_btn2);
@@ -354,9 +382,9 @@ socket.on('version', function(data) {
 		enablePrint = data.enablePrint;
 	}
 
-	if (!enablePrint) {
-		$("#coursePrint").hide();
-	}	
+//	if (!enablePrint) {
+//		$("#coursePrint").hide();
+//	}	
 
 	// set the labels
 	if (typeof data.uiLabels !== 'undefined') {
@@ -448,6 +476,20 @@ socket.on('deleteCourseResults', function(data) {
 	}
 });
 
+socket.on('getCourseResults', function(data) {
+	$("#saveStatus").html('');
+	$("#efileResult").html('');
+
+	if (data.msg === 'PASS') {
+		console.log(data.buff);
+	}
+	editFile(data)
+});
+
+socket.on('saveCourseResults', function(data) {
+    $("#saveStatus").html('&nbsp;&nbsp;&nbsp;' + data.message);
+});
+
 socket.on('setLanguageResults', function(data) {
 
 	// set the labels
@@ -537,6 +579,7 @@ socket.on('pdfCreated', function(ofn) {
 	$("#pdfPreview").html(rtn);
 });
 
+
 socket.on('insightResults', function(data) {
 	let cCnt = 0;
 	let info = '';
@@ -555,7 +598,11 @@ socket.on('insightResults', function(data) {
 	}
 });
 
-
+// retrieve the file to edit
+//socket.on('objectDef', function(data) {
+//    console.log('socket: objectDef');
+//    editDef(data);
+//});
 
 //----------------------------------------------------------
 // socket io definitions for out-bound
@@ -571,13 +618,10 @@ function dropDowns(data) {
 	}
 	populatePrintList(courseConfig);
 	populateDeleteList(courseConfig);
+	populateEFileList(courseConfig);
 	populateLanguageList();
 }
  
-
-
-
-
 // send request to server to get drop down list data
 function getSelectLists() {
     socket.emit('getDropDowns');
@@ -800,6 +844,14 @@ function publishToggle(key) {
 	socket.emit('validateCourses', 'refresh');
 	//populateCourseCatalogList(courseIds);
 }
+
+// edit course file
+function editCourses() {
+    closeNav();
+	$("#efileResult").html('');
+    $("#efileModal").modal();
+}
+
 
 
 // show the splash screen
@@ -1071,6 +1123,17 @@ function printCourse() {
 	'&nbsp;&nbsp;&nbsp;&nbsp;<span style="vertical-align: middle;"></span></div>';
 	$("#pdfPreview").html(resp);
 }
+
+// course selected and begin pressed
+function editCourse() {
+	var pFile = $("#efileList option:selected").val();
+	socket.emit('getCourse', pFile);
+	var resp = '<br><div><img style="float: left; vertical-align: middle; margin-bottom: 0.75em;" src="images/loading.gif" height="40" width="40">' +
+	'&nbsp;&nbsp;&nbsp;&nbsp;<span style="vertical-align: middle;"></span></div>';
+	$("#efileResult").html(resp);
+}
+
+
 
 //----------------------------------------------------------
 // slide out navigation functions
@@ -1449,6 +1512,30 @@ function populatePrintList(courses) {
     $("#printList").html(listitems);
 }
 
+//----------------------------------------------------------
+// populate the course eFile list
+//----------------------------------------------------------
+function populateEFileList(courses) {
+    $("#efileList").empty();
+    $("#efileList").html('');
+	var items = [];
+	items.push('&nbsp;' + uiLabels.modal_efile_list + '::_blank');
+	// load array to sort
+	for (course in courses) {
+		items.push(courses[course].c_title + '::'+ courses[course].filename)
+	}
+	// sort course names
+	items.sort();
+	var listitems = '';
+	var entry;
+	// build options for html
+	for (var i = 0; i < items.length; i++) {
+		entry = items[i].split('::');
+        listitems += '<option value="' + items[i] + '">' + entry[0] + '</option>';
+	}
+    $("#efileList").html(listitems);
+	$("#efileResult").html('');
+}
 
 //----------------------------------------------------------
 // populate the topics drop down

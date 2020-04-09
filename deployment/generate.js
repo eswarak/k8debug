@@ -48,11 +48,13 @@ let currentTeam = '';
 let routeHost = '';
 let nfs = '';
 
+
 function logMsg(msg) {
 	let output = new Date().toLocaleString() + ' :: ' + msg;
     // write to console
     console.log(output);
 }
+
 
 function buildDir(what) {
     let dir = what;
@@ -64,19 +66,6 @@ function buildDir(what) {
     }
 }
 
-function listTemplateFiles() {
-    let files = readTemplateDirectory();
-    let rtn = [];
-    files.forEach(function(file) {
-        try {
-            rtn.push(file)
-        } catch(err) {
-            logMsg('genrC055 - Error processing request to get delete course file list: ' +  err);
-            rtn = [];
-        }
-    });
-    return rtn
-};
 
 function getFile(f) {
     let buff = '';
@@ -94,10 +83,12 @@ function getFile(f) {
     return buff;
 };
 
+
 function readTemplateDirectory() {
     let files = fs.readdirSync(templateDir);
     return files;
 };
+
     
 function buildYaml() {
     buildConfig();
@@ -177,6 +168,7 @@ function buildYaml() {
         console.log(cwd + '/fileout/std_06_docker_users.sh ' + ipArray[s].trim());
     }
 }
+
 
 //
 // read the config file and get the template replacement value
@@ -374,6 +366,7 @@ function buildTeams() {
     }
 }
 
+
 //
 // read the template file and replace located varialbles
 //
@@ -439,6 +432,7 @@ function parseLines(lines, team) {
     return rtn;
 }
 
+
 function ripLine(line, team) {
     let loop = true;
     let newline = line;
@@ -463,13 +457,7 @@ function ripLine(line, team) {
     if (pline === '') {
         pline = line;
     }
-
-//    if (rCnt > 0) {
-//        console.log('Old: ' + line);
-//        console.log('New: ' + pline)
-//    }
     return pline;
-
 }
 
 
@@ -521,7 +509,6 @@ function toBuffer(data) {
     } else {
         return null;
     }
-
 }
 
 
