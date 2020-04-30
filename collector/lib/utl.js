@@ -22,37 +22,37 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 "use strict"
-const cllr = require('../lib/cllr');
+const fs = require('fs');
 
 function standardDev(values){
-    var avg = average(values);
+    let avg = average(values);
     
-    var squareDiffs = values.map(function(value){
-      var diff = value - avg;
-      var sqrDiff = diff * diff;
+    let squareDiffs = values.map(function(value){
+      let diff = value - avg;
+      let sqrDiff = diff * diff;
       return sqrDiff;
     });
     
-    var avgSquareDiff = average(squareDiffs);
+    let avgSquareDiff = average(squareDiffs);
   
-    var stdDev = Math.sqrt(avgSquareDiff);
+    let stdDev = Math.sqrt(avgSquareDiff);
     return stdDev;
 }
   
 function average(data){
-    var sum = data.reduce(function(sum, value){
+    let sum = data.reduce(function(sum, value){
       return sum + value;
     }, 0);
   
-    var avg = sum / data.length;
+    let avg = sum / data.length;
     return avg;
 }
   
 //--------- format milliseconds to minutes:sesonds
 function milliTS(millis) {
-    var minutes = Math.floor(millis / 60000);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
-    var rtn = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+    let minutes = Math.floor(millis / 60000);
+    let seconds = ((millis % 60000) / 1000).toFixed(0);
+    let rtn = minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
     // Example: 9:23 append leading zero
     if (rtn.length < 5) {
         rtn = '0' + rtn;
@@ -61,6 +61,27 @@ function milliTS(millis) {
         rtn = '00' + rtn;
     }
     return rtn;
+}
+
+    //------------------------------------------------------------------------------
+    // save edited course file
+    //------------------------------------------------------------------------------
+function saveFile(content) {
+    let fn = content.file;
+    try {
+        //doc = JSON.stringify(doc, null, 4);
+        fs.writeFileSync(fn, content.data);
+        return {"status": "PASS", "message": "Successfully saved file: " + fn};;
+    } catch (e) {
+        logIt('cllrU084 - Error saving file: ' + fn + ' message: ' + e);
+        return {"status": "FAIL", "message": "Failed saving file: " + fn + " message: " + e};
+    }
+}
+
+function logIt(msg) {
+    let output = new Date().toLocaleString() + ' :: ' + msg;
+    // write to console
+    console.log(output);
 }
 
 //------------------------------------------------------------------------------
@@ -72,7 +93,6 @@ module.exports = {
     // check if namespace is in array 
     //------------------------------------------------------------------------------
     logMsg: function(msg) {
-        
         let output = new Date().toLocaleString() + ' :: ' + msg;
         // write to console
         console.log(output);
@@ -84,7 +104,11 @@ module.exports = {
 
     milliTS: function(data) {
         return milliTS(data);
-    } 
+    },
+
+    writeFile: function(data) {
+        return saveFile(data);
+    }  
     
 //end of exports 
 };

@@ -154,10 +154,6 @@ function processFiles(files) {
                 // remove the temp html file
                 deleteFile(cwd + cllr.courseDirectory + newfile + '.html');
 
-                // if set write our the entire processing for the snippet parser
-                //if (cllr.createHtml) {
-                //    fs.writeFileSync(cwd + cllr.courseDirectory + newfile + '_segments.html', JSON.stringify(segments,null,4) );
-                //}
             }
         } catch(err) {
             utl.logMsg('cllrC030 - Error processing course file: ' +  cwd + cllr.courseDirectory + file + ' error message: ' + err);
@@ -194,6 +190,27 @@ function deleteFile(file) {
     }
 };
 
+function getFile(file) {
+    let buff = '';
+    let status = '';
+    let msg = '';
+    try {
+        buff = fs.readFileSync(file, {"encoding": "utf8"})
+        status = 'PASS'
+        msg = 'Success reading file: ' + file
+        utl.logMsg('cllrC038 - ' + msg);
+    } catch(err) {
+        buff = '';
+        status = 'FAIL'
+        msg = 'Error reading file: ' +  file + ' message: ' + err
+        utl.logMsg('cllrC037 - ' + msg);
+
+    }
+    return {"status": status, "msg": msg, "buff": buff, "file": file};
+
+}
+
+
 //------------------------------------------------------------------------------
 // common routines
 //------------------------------------------------------------------------------
@@ -214,6 +231,19 @@ module.exports = {
                 cllr.courseDirectory = cllr.courseDirectory + '/';
             }
             rtn = deleteFile(cwd + cllr.courseDirectory + split[1] + '.md');
+        }
+
+        return rtn;
+    },
+
+    getCourse: function(data) {
+        let split = data.split('::');
+        let rtn = 'FAIL';
+        if (typeof split[1] !== 'undefined') {
+            if (!cllr.courseDirectory.endsWith('/')) {
+                cllr.courseDirectory = cllr.courseDirectory + '/';
+            }
+            rtn = getFile(cwd + cllr.courseDirectory + split[1] + '.md');
         }
 
         return rtn;

@@ -61,11 +61,30 @@
                 padding-bottom: 3px !important; 
                 }
             </style>
+
+            <!-- Editor CSS -->
+            <style type="text/css" media="screen">
+                #editor {
+                    /** Setting height is also important, otherwise editor wont showup**/
+                    height: 700px;
+                }           
+            </style>
+
             <!-- Scripts -->
             <script src="js/jquery.min.js"></script>
             <script src="js/bootstrap.min.js"></script>
+
+            <!-- Drag-n-drop files -->            
             <script src="js/dropzone.js"></script>
+            
+            <!-- Charts-->
             <script src="js/Chart.bundle.min.js"></script>
+
+            <!-- ACE Editor-->
+            <script src="ace/ace.js" type="text/javascript" charset="utf-8"></script>
+            <script src="ace/ext-language_tools.js"></script>
+
+
         </head>
         <body>
             <!-- ==================================== -->
@@ -88,15 +107,11 @@
                 <hr>
                 <div id="author">
                     <a href="javascript:fileUpload()" style="font-family: Arial, sans-serif;"><span id="menu04"></span></a>
+                    <a href="javascript:editCourses()" style="font-family: Arial, sans-serif;"><span id="menu12"></span></a>
                     <a href="javascript:validateCourses()" style="font-family: Arial, sans-serif;"><span id="menu05"></span></a>
                     <a href="javascript:publishCourses()" style="font-family: Arial, sans-serif;"><span id="menu09"></span></a>
                     <a href="javascript:deleteCourseModal()" style="font-family: Arial, sans-serif;"><span id="menu10"></span></a>
                     <a href="javascript:teamModal()" style="font-family: Arial, sans-serif;"><span id="menu07"></span></a>
-
-
-                    <a href="javascript:loginModal()" style="font-family: Arial, sans-serif;"><span id="menuXX"></span></a>
-
-
                 </div>
                 <div id="coursePrint">
                     <a href="javascript:printModal()" style="font-family: Arial, sans-serif;"><span id="menu06"></span></a>
@@ -520,7 +535,50 @@
                 </div>
             </div>
 
-    
+
+
+
+            <!-- ==================================== -->
+            <!-- Select course file to edit Modal     -->   
+            <!-- ==================================== -->
+            <div class="modal fade" id="efileModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div id="efileHeader">
+                                <h4 class="modal-title">
+                                    <span style="font-family: Arial, sans-serif;">
+                                    <span id="modal_efile_hdr1"></span>
+                                    </span>
+                                </h4>
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div class="col-sm-6" style="padding-top: 20px;">
+                                <div class="form-group">
+                                    <select class="form-control" id="efileList">
+                                        <option>1</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-3" style="padding-top: 20px;">
+                                <button type="button" class="btn btn-outline-primary" onclick="editCourse()" style="margin: 5px;">
+                                &nbsp;&nbsp;&nbsp;<span id="modal_efile_btn1"></span>&nbsp;&nbsp;&nbsp;
+                                </button>
+                            </div>
+
+                            <div id="efileResult" style="margin-top: 20px;">
+                                <!-- Edit/Get status message here -->>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal"><span id="modal_efile_btn2"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
             <!-- ==================================== -->
             <!-- Publish course Modal section         -->   
             <!-- ==================================== -->
@@ -560,8 +618,8 @@
                                             <!-- No body to display -->
                                         </tbody>
                                     </table>
-                                </div>                            </div>
-
+                                </div>                            
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" data-dismiss="modal"><span id="modal_publish_btn1"></span></button>
@@ -606,11 +664,6 @@
                                 </button>
                             </div>
                         </div>
-                        <!--
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-dismiss="modal"><span id="modal_login_btn2"></span></button>
-                        </div>
-                        -->
                     </div>
                 </div>
             </div>
@@ -712,6 +765,78 @@
                 </div>
             </div>
 
+
+
+
+
+            <!-- ==================================== -->
+            <!-- editor Modal section                 -->
+            <!-- ==================================== -->
+            <div class="modal fade" id="editorModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <div id="editHeader">
+                                <h6 class="modal-title" id="editTitle">Object Definition</h6>
+                            </div>
+                        </div>
+                        <div class="modal-body mb-0 pb-0">
+                            <div class="panel panel-default border">
+                                <div class="panel-body">
+                                    <div id="file-content" style="display: none;"></div>
+                                    <div id="editor"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-row mt-1 mb-0">
+                                <div class="form-group col-md-1 text-right pr-1 pt-1 pb-0">
+                                    <span style="font-size: 65%">Theme:</span>&nbsp;
+                                </div>
+                                <div class="form-group col-md-1 pl-0">
+                                    <select class="form-control-sm" id="eTheme" name="eTheme">
+                                        '<option value="sqlserver" selected>Light</option>'
+                                        '<option value="solarized_light">Medium</option>'
+                                        '<option value="monokai">Dark</option>'
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-1 text-right pr-1 pt-1">
+                                    <span style="font-size: 65%">Font size:</span>&nbsp;
+                                </div>
+                                <div class="form-group col-md-1 pl-0">
+                                    <select class="form-control-sm" id="eFont" name="eFont">
+                                        '<option value="12" selected>Small</option>'
+                                        '<option value="14">Medium</option>'
+                                        '<option value="18">Large</option>'
+                                    </select>
+                                </div>
+                            </div>        
+                        </div>
+                        <div id="saveStatus">
+                            <!-- File save status message here -->
+                        </div>
+                        <div class="modal-footer mt-0 pt-1" id="saFooter">
+                            <div class="form-row col-md-12">
+                                <div class="form-group col-md-1" id="sa1">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="saveFile()">Save</button>
+                                </div>
+                                <div class="form-group col-md-1" id="sa2">
+                                    <!-- <button type="button" class="btn btn-sm btn-outline-primary" onclick="saveFileAs()"></button> -->
+                                </div>
+                                <div class="form-group col-md-9" >&nbsp;
+                                </div>
+                                <div class="form-group col-md-1">
+                                    <button type="button" class="btn btn-sm btn-outline-primary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+
+
+
+
+
             <!-- ==================================== -->
             <!-- About Modal section                  -->
             <!-- ==================================== -->
@@ -779,7 +904,8 @@
             <script src="/socket.io/socket.io.js"></script>
             <!-- Script -->
             <script src="js/cllrmain.js"></script>
-            <!-- <script src="js/graph.js"></script> -->
+            <script src="js/cllredit.js"></script>
+
         </body>
     </html>
 </doctype>
